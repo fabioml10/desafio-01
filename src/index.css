@@ -12,6 +12,22 @@ code {
     monospace;
 }
 
+.d-flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
 .default-flex-row {
   display: flex;
   flex-direction: row;
