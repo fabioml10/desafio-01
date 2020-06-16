@@ -27,7 +27,9 @@ code {
 .justify-content-center {
   justify-content: center;
 }
-
+.card {
+  height: 300px;
+}
 .default-flex-row {
   display: flex;
   flex-direction: row;

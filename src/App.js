@@ -9,7 +9,8 @@ export default class App extends Component {
     this.state = {
       allCountries: [],
       filteredCountries: [],
-      filter: ""
+      filter: "",
+      totalPopulation: 0
     }
   }
 
@@ -50,11 +51,11 @@ export default class App extends Component {
   }
 
   render() {
-    const { allCountries, filteredCountries, filter } = this.state
+    const { filteredCountries, filter } = this.state
     return (
       <div className="container">
-        <h1>React Countries {allCountries.length}</h1>
-        <Header filter={filter} onChangeFilter={this.handleFilter} />
+        <h1>React Countries</h1>
+        <Header filter={filter} onChangeFilter={this.handleFilter} countryCount={filteredCountries.length} populationCount={filteredCountries.reduce((acc, cur) => acc + cur.population, 0)} />
         <Countries allCountries={filteredCountries} />
       </div>
 
