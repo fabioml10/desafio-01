@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Data from './data'
-import Countries from './components/Countries/Countries';
-import Header from './components/Header/Header';
+import Countries from './components/Countries/CountriesFuncional';
+import Header from './components/Header/HeaderFuncional';
 
 export default class App extends Component {
   constructor() {
