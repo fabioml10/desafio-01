@@ -1,64 +1,52 @@
-import React, { Component } from 'react';
-import Data from './data'
+import React, { useState, useEffect } from 'react';
 import Countries from './components/Countries/CountriesFuncional';
 import Header from './components/Header/HeaderFuncional';
 
-export default class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      allCountries: [],
-      filteredCountries: [],
-      filter: "",
-      totalPopulation: 0
-    }
-  }
+export default function App() {
 
-  async componentDidMount() {
+  const [allCountries, setAllCountries] = useState([])
+  const [filteredCountries, setFilteredCountries] = useState([])
+  const [filter, setFilter] = useState("")
 
-    // const res = await fetch('https://restcountries.eu/rest/v2/all')
-    // const json = await res.json()
-    const json = Data
+  useEffect(() => {
+    const fetchCountries = async () => {
+      const res = await fetch('https://restcountries.eu/rest/v2/all')
+      const json = await res.json()
 
-    const allCountries = json.map(({ name, numericCode, population, flag }) => {
-      return {
-        id: numericCode,
-        name,
-        population,
-        flag
-      }
-    })
-
-    this.setState({
-      allCountries,
-      filteredCountries: allCountries
-    })
-
-  }
-
-  handleFilter = (filter) => {
-    this.setState({
-      filter
-    })
-    console.log(filter)
-
-    this.setState({
-      filteredCountries: this.state.allCountries.filter(({ name }) => {
-        return name.toLowerCase().includes(filter.toLowerCase())
+      const allCountries = json.map(({ name, numericCode, population, flag }) => {
+        return {
+          id: numericCode,
+          name,
+          population,
+          flag
+        }
       })
+
+      setAllCountries(allCountries)
+      setFilteredCountries(allCountries)
+    }
+
+    fetchCountries()
+
+  }, [])
+
+  const handleFilter = (filter) => {
+    setFilter(filter)
+
+    const filteringCountries = allCountries.filter(({ name }) => {
+      return name.toLowerCase().includes(filter.toLowerCase())
     })
 
+    setFilteredCountries(filteringCountries)
+
   }
 
-  render() {
-    const { filteredCountries, filter } = this.state
-    return (
-      <div className="container">
-        <h1>React Countries</h1>
-        <Header filter={filter} onChangeFilter={this.handleFilter} countryCount={filteredCountries.length} populationCount={filteredCountries.reduce((acc, cur) => acc + cur.population, 0)} />
-        <Countries allCountries={filteredCountries} />
-      </div>
+  return (
+    <div className="container">
+      <h1>React Countries</h1>
+      <Header filter={filter} onChangeFilter={handleFilter} countryCount={filteredCountries.length} populationCount={filteredCountries.reduce((acc, cur) => acc + cur.population, 0)} />
+      <Countries allCountries={filteredCountries} />
+    </div>
 
-    )
-  }
+  )
 }
