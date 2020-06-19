@@ -23,7 +23,7 @@ export default function App() {
       })
 
       setAllCountries(allCountries)
-      setFilteredCountries(allCountries)
+      setFilteredCountries(Object.assign([], allCountries))
     }
 
     fetchCountries()
